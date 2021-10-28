@@ -20,11 +20,6 @@ const timeArray = [
     name: "min",
     value: 1000 * 60,
   },
-  // Un-comment this for display seconds in the timers
-  // {
-  //   name: "sec",
-  //   value: 1000,
-  // },
 ];
 
 let eventArray = [];
@@ -50,6 +45,15 @@ if (localStorage.eventArray) {
 // -----------------------------------------
 //                FUNCTIONS
 // -----------------------------------------
+// Transform backgroundColor of [events list section] if empty
+function hiddenIfEmpty(x) {
+  if (x.innerHTML == "") {
+    x.style.background = "transparent";
+  } else {
+    x.style.background = "rgba(0, 0, 0, 0.35)";
+  }
+}
+
 // Transform event-text & event-date in pink color if time-event is over (== if span with the time is empty (== ""))
 function pinkText(x) {
   if (x.innerHTML == "") {
@@ -95,11 +99,13 @@ function createEventDOM(event) {
   let newEventTxt = document.createElement("p");
   newEventTxt.innerHTML = event.name;
 
+  // REMOVE BTN
   let newRemoveBtn = document.createElement("button");
   newRemoveBtn.classList.add("removeBtn");
   newRemoveBtn.id = event.id;
   newRemoveBtn.addEventListener("click", (e) => {
-    newEventDiv.remove();
+    newEventDiv.remove(); // remove DOM elem
+    hiddenIfEmpty(eventList); // set a background color
     // s/o kelian
     const offset = eventArray.findIndex((el) => el.id == e.target.id);
     if (offset !== -1) {
@@ -130,8 +136,17 @@ function countDown(date, displayedText) {
 
   displayedText.innerHTML = "";
 
+  if (timestamp < 60000 && timestamp > 0) {
+    let secNbr = Math.floor(timestamp / 1000);
+    if (secNbr == 0) {
+      displayedText.innerHTML = "";
+    } else {
+      displayedText.innerHTML = secNbr + "sec";
+    }
+  }
+
   for (let item of timeArray) {
-    if (timestamp > item.value) {
+    if (timestamp >= item.value) {
       let itemQuantityInTimestamp = Math.floor(timestamp / item.value);
 
       displayedText.innerHTML += itemQuantityInTimestamp + item.name + " ";
@@ -154,18 +169,22 @@ inputsBtn.addEventListener("click", () => {
   ) {
     // Create + Push event-elem in eventArray
     saveEventInArray();
-    // Create DOM elements for this event-elem
+    // Create DOM elements for this event-elem and
     createEventDOM(eventArray[eventArray.length - 1]);
+    hiddenIfEmpty(eventList); // set a background color
     // Reset inputs values
     dateInput.value = "";
     textInput.value = "";
   }
 });
 
-// Interval for update all spans(event-timers) and JE VOIS LA VIE EN ROSE MON REUF
+// Interval for update all spans(event-timers) and set pink text if time is over
 const intervalSpansUpdate = setInterval(() => {
   for (let event of eventArray) {
     countDown(event.date, event.spanHtml);
     pinkText(event.spanHtml);
   }
 }, 1000);
+
+// set a background color
+hiddenIfEmpty(eventList);
