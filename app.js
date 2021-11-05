@@ -35,11 +35,10 @@ if (localStorage.i) {
   i = Number(localStorage.i);
 }
 if (localStorage.eventArray) {
+  // eventArray update
   eventArray = JSON.parse(localStorage.eventArray);
   // RE-Creation of DOM elements if a [eventArray] is already saved in localStorage
-  for (let event of eventArray) {
-    createEventDOM(event);
-  }
+  eventArray.forEach((elem) => createEventDOM(elem));
 }
 
 // -----------------------------------------
@@ -82,25 +81,49 @@ function saveEventInArray() {
     id: i,
   };
   eventArray.push(newObjEvent);
-  i++;
+  i += 1;
   // Local Storage
   localStorage.setItem("i", i);
   localStorage.setItem("eventArray", JSON.stringify(eventArray));
+}
+
+// Create a countDown from a specific date and display it in a specific DOM elem(displayedText)
+function countDown(date, displayedText) {
+  let timestamp = new Date(date).getTime() - new Date().getTime();
+
+  displayedText.innerHTML = "";
+
+  if (timestamp < 60000 && timestamp > 0) {
+    const secNbr = Math.floor(timestamp / 1000);
+    if (secNbr > 0) {
+      displayedText.innerHTML = `${secNbr}sec`;
+    }
+  }
+
+  timeArray.forEach((item) => {
+    if (timestamp >= item.value) {
+      const itemQuantityInTimestamp = Math.floor(timestamp / item.value);
+
+      displayedText.innerHTML += `${itemQuantityInTimestamp + item.name} `;
+
+      timestamp -= itemQuantityInTimestamp * item.value;
+    }
+  });
 }
 
 // Create DOM element (with a removeBtn addEventListener)
 function createEventDOM(event) {
   const newEventDiv = document.createElement("article");
 
-  let newEventTxtDate = document.createElement("p");
+  const newEventTxtDate = document.createElement("p");
   timeFormat(event.date);
   newEventTxtDate.innerHTML = dateTimeFormat;
 
-  let newEventTxt = document.createElement("p");
+  const newEventTxt = document.createElement("p");
   newEventTxt.innerHTML = event.name;
 
   // REMOVE BTN
-  let newRemoveBtn = document.createElement("button");
+  const newRemoveBtn = document.createElement("button");
   newRemoveBtn.classList.add("removeBtn");
   newRemoveBtn.id = event.id;
   newRemoveBtn.addEventListener("click", (e) => {
@@ -109,14 +132,14 @@ function createEventDOM(event) {
     // s/o kelian
     const offset = eventArray.findIndex((el) => el.id == e.target.id);
     if (offset !== -1) {
-      console.log("found at index:", offset);
+      // console.log("found at index:", offset);
       eventArray.splice(offset, 1);
       // Local Storage
       localStorage.setItem("eventArray", JSON.stringify(eventArray));
     }
   });
 
-  let newSpan = document.createElement("span");
+  const newSpan = document.createElement("span");
   countDown(event.date, newSpan);
   event.spanHtml = newSpan;
 
@@ -128,30 +151,6 @@ function createEventDOM(event) {
   eventList.appendChild(newEventDiv);
 
   pinkText(event.spanHtml);
-}
-
-// Create a countDown from a specific date and display it in a specific DOM elem(displayedText)
-function countDown(date, displayedText) {
-  let timestamp = new Date(date).getTime() - new Date().getTime();
-
-  displayedText.innerHTML = "";
-
-  if (timestamp < 60000 && timestamp > 0) {
-    let secNbr = Math.floor(timestamp / 1000);
-    if (secNbr > 0) {
-      displayedText.innerHTML = secNbr + "sec";
-    }
-  }
-
-  for (let item of timeArray) {
-    if (timestamp >= item.value) {
-      let itemQuantityInTimestamp = Math.floor(timestamp / item.value);
-
-      displayedText.innerHTML += itemQuantityInTimestamp + item.name + " ";
-
-      timestamp = timestamp - itemQuantityInTimestamp * item.value;
-    }
-  }
 }
 
 // ---------------------------------------------------------
@@ -178,10 +177,10 @@ inputsBtn.addEventListener("click", () => {
 
 // Interval for update all spans(event-timers) and set pink text if time is over
 setInterval(() => {
-  for (let event of eventArray) {
-    countDown(event.date, event.spanHtml);
-    pinkText(event.spanHtml);
-  }
+  eventArray.forEach((elem) => {
+    countDown(elem.date, elem.spanHtml);
+    pinkText(elem.spanHtml);
+  });
 }, 1000);
 
 // set a background color
