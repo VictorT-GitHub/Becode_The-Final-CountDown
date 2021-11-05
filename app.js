@@ -47,7 +47,7 @@ if (localStorage.eventArray) {
 // -----------------------------------------
 // Transform backgroundColor of [events list section] if empty
 function hiddenIfEmpty(x) {
-  if (x.innerHTML == "") {
+  if (x.innerHTML === "") {
     x.style.background = "transparent";
   } else {
     x.style.background = "rgba(0, 0, 0, 0.35)";
@@ -76,7 +76,7 @@ function timeFormat(string) {
 
 // Create + Push + Save in localStorage : event-object for [eventArray] (+i)
 function saveEventInArray() {
-  let newObjEvent = {
+  const newObjEvent = {
     name: textInput.value,
     date: dateInput.value,
     id: i,
@@ -130,7 +130,7 @@ function createEventDOM(event) {
   pinkText(event.spanHtml);
 }
 
-// Create a countDown from a specific date(date) and display it in a specific DOM elem(displayedText)
+// Create a countDown from a specific date and display it in a specific DOM elem(displayedText)
 function countDown(date, displayedText) {
   let timestamp = new Date(date).getTime() - new Date().getTime();
 
@@ -177,7 +177,7 @@ inputsBtn.addEventListener("click", () => {
 });
 
 // Interval for update all spans(event-timers) and set pink text if time is over
-const intervalSpansUpdate = setInterval(() => {
+setInterval(() => {
   for (let event of eventArray) {
     countDown(event.date, event.spanHtml);
     pinkText(event.spanHtml);
