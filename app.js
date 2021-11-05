@@ -54,9 +54,9 @@ function hiddenIfEmpty(x) {
   }
 }
 
-// Transform event-text & event-date in pink color if time-event is over (== if span with the time is empty (== ""))
+// Transform event-text&-date in pinkcolor if time-event is over (== if span with the time is empty)
 function pinkText(x) {
-  if (x.innerHTML == "") {
+  if (x.innerHTML === "") {
     x.parentElement.children[1].style.color = "rgba(252, 84, 106, 0.9)";
     x.parentElement.children[2].style.color = "rgba(252, 84, 106, 0.9)";
   }
@@ -138,9 +138,7 @@ function countDown(date, displayedText) {
 
   if (timestamp < 60000 && timestamp > 0) {
     let secNbr = Math.floor(timestamp / 1000);
-    if (secNbr == 0) {
-      displayedText.innerHTML = "";
-    } else {
+    if (secNbr > 0) {
       displayedText.innerHTML = secNbr + "sec";
     }
   }

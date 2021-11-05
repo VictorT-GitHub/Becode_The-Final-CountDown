@@ -1,7 +1,7 @@
 # Becode_The-Final-CountDown
 
-**HTML** **CSS** **JavaScript**
+Simple event-countdown algo exercise
 
-GitHub Page -> [https://victort-github.github.io/Becode_The-Final-CountDown/](https://victort-github.github.io/Becode_The-Final-CountDown/)
+**HTML** | **CSS** | **JavaScript** | **ESLint**
 
-WORK IN PROGRESS
+**[Look at the result on the GitHub page](https://victort-github.github.io/Becode_The-Final-CountDown/)**

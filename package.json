@@ -1,0 +1,25 @@
+{
+  "name": "the-final-countdown",
+  "version": "1.0.0",
+  "description": "**HTML** **CSS** **JavaScript**",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorT-GitHub/Becode_The-Final-CountDown.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorT-GitHub/Becode_The-Final-CountDown/issues"
+  },
+  "homepage": "https://github.com/VictorT-GitHub/Becode_The-Final-CountDown#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "prettier": "^2.4.1"
+  }
+}
