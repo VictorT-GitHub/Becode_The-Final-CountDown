@@ -1,7 +1,7 @@
 # Becode_The-Final-CountDown
 
-Simple event-countdown algo exercise
+Todo list with countdown and local storage
 
-**HTML** | **CSS** | **JavaScript** | **ESLint**
+**HTML** - **CSS** - **JavaScript** - **ESLint** - **Prettier**
 
 **[Look at the result on the GitHub page](https://victort-github.github.io/Becode_The-Final-CountDown/)**
